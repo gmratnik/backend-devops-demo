@@ -1,0 +1,18 @@
+[tools]
+python = "3.14"
+uv = "latest"
+
+[tasks.setup]
+description = "Initial app setup."
+run = "mise install && uv sync && uv run python manage.py migrate && uv run python manage.py seed"
+
+[tasks.setup.env]
+PGPASSWORD = "{{env.POSTGRES_PASSWORD | default(value='')}}"
+
+[tasks.migrations]
+description = "Run DB migrations."
+run = "uv run python manage.py migrate"
+
+[tasks.start]
+description = "Run the app in developer mode."
+run = "uv run python manage.py runserver"
